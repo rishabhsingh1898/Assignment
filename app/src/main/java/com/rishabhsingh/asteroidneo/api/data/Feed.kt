@@ -1,7 +1,7 @@
 package com.rishabhsingh.asteroidneo.api.data
 
 data class Feed(
-    val near_earth_objects: Map<String, List<Asteroids>>
+    var near_earth_objects: Map<String, List<Asteroids>>
 )
 
 data class Asteroids(
