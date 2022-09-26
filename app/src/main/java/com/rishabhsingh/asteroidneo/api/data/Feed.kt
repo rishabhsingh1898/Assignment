@@ -21,7 +21,12 @@ data class Kilometer(
 
 
 data class Distance(
-    val miss_distance: MissDistance
+    val miss_distance: MissDistance,
+    val relative_velocity: Velocity
+)
+
+data class Velocity(
+    val kilometers_per_hour: String
 )
 
 data class MissDistance(

@@ -16,8 +16,8 @@
     <LinearLayout
         android:id="@+id/ll_start_date"
         android:layout_width="match_parent"
-        android:gravity="center"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical">
 
         <Button
@@ -29,17 +29,17 @@
         <TextView
             android:id="@+id/tv_start_date"
             android:layout_width="wrap_content"
-            android:textSize="16sp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textSize="16sp" />
 
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_end_date"
-        android:layout_below="@+id/ll_start_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_start_date"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -47,41 +47,52 @@
             android:id="@+id/btn_end_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/end_date"
-            />
+            android:text="@string/end_date" />
 
         <TextView
             android:id="@+id/tv_end_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/ll_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_end_date"
+        android:gravity="center">
 
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/submit" />
 
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_fastest_asteroid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_submit"
         android:gravity="center"
-        android:layout_below="@+id/ll_end_date"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/fastest_asteroid"
             android:layout_gravity="center"
-            android:textSize="20sp"/>
+            android:text="@string/fastest_asteroid"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tv_fastest_asteroid"
-            android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp" />
 
 
     </LinearLayout>
@@ -89,47 +100,47 @@
     <LinearLayout
         android:id="@+id/ll_closest_asteroid"
         android:layout_width="match_parent"
-        android:layout_below="@+id/ll_fastest_asteroid"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_fastest_asteroid"
         android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/closest_asteroid"
             android:layout_gravity="center"
-            android:textSize="20sp"/>
+            android:text="@string/closest_asteroid"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tv_closest_asteroid"
-            android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp" />
 
 
     </LinearLayout>
 
     <LinearLayout
-        android:gravity="center"
-        android:layout_below="@+id/ll_closest_asteroid"
         android:id="@+id/ll_average_size_asteroid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_closest_asteroid"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/average_size_asteroid"
             android:layout_gravity="center"
-            android:textSize="20sp"/>
+            android:text="@string/average_size_asteroid"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tv_average_size_asteroid"
-            android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp" />
 
 
     </LinearLayout>

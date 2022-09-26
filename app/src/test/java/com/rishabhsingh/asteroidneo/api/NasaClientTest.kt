@@ -1,6 +1,7 @@
 package com.rishabhsingh.asteroidneo.api
 
 import com.rishabhsingh.asteroidneo.api.NasaApi.Companion.CLIENT_ID
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Test
 
@@ -13,7 +14,10 @@ class NasaClientTest {
         val startDate = "2020-01-01"
         val endDate = "2020-01-02"
 
-        val feed = nasaClient.api.getNeoFeed(startDate, endDate, CLIENT_ID).execute()
-        Assert.assertNotNull(feed.body()?.near_earth_objects)
+        runBlocking {
+            val response = nasaClient.api.getNeoFeed(startDate, endDate, CLIENT_ID)
+            Assert.assertNotNull(response.body()?.near_earth_objects)
+        }
+
     }
 }

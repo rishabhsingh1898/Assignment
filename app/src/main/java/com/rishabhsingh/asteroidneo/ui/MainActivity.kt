@@ -4,27 +4,30 @@ import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.view.isVisible
 import com.rishabhsingh.asteroidneo.R
 import com.rishabhsingh.asteroidneo.api.NasaClient
 import com.rishabhsingh.asteroidneo.contracts.Contracts
 import com.rishabhsingh.asteroidneo.databinding.ActivityMainBinding
 import com.rishabhsingh.asteroidneo.presenter.MainActivityPresenter
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity(R.layout.activity_main),Contracts.View {
 
     private lateinit var binding : ActivityMainBinding
-    private var presenter: MainActivityPresenter? = null
+    private var mPresenter: MainActivityPresenter? = null
     private lateinit var startDate :String
     private lateinit var endDate :String
 
-    private val nasaClient = NasaClient()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        presenter = MainActivityPresenter(this)
+        mPresenter = MainActivityPresenter(this)
     }
 
     private fun updateStartDateText(myCalender:Calendar) {
@@ -77,9 +80,21 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),Contracts.View {
                 ).show()
             }
 
-            tvFastestAsteroid.text = presenter?.getFastestAsteroid()
-            tvClosestAsteroid.text = presenter?.getClosestAsteroid()
-            tvAverageSizeAsteroid.text = presenter?.getAverageSizeAsteroid()
+            btnSubmit.setOnClickListener{
+                progressBar.isVisible = true
+                mPresenter?.requestFeed(startDate, endDate)
+
+            }
         }
     }
+
+    override fun updateData(fastest :String, average : String, minimum : String) {
+        binding.apply {
+            tvFastestAsteroid.text = fastest
+            tvClosestAsteroid.text = minimum
+            tvAverageSizeAsteroid.text = average
+            progressBar.isVisible = false
+        }
+    }
+
 }
