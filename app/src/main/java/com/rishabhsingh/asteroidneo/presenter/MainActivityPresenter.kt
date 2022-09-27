@@ -39,16 +39,41 @@ class MainActivityPresenter(v: MainActivity): Contracts.Presenter {
     }
 
     override fun getClosestAsteroid(): String {
-        return "Not Implemented"
+        lateinit var closest:String
+        lateinit var id:String
+        for (item in feed.near_earth_objects) {
+
+            var temp = item.value[0].close_approach_data[0].miss_distance.kilometers
+            id = item.value[0].id
+
+            for (obj in item.value) {
+                if (obj.close_approach_data[0]
+                        .miss_distance.kilometers < temp
+                ) {
+                    temp = obj.close_approach_data[0].miss_distance.kilometers
+                    id = obj.id
+                }
+            }
+            closest = temp
+        }
+        return "Asteroid ID:${id} with speed ${closest}Km/h"
     }
 
     override fun getAverageSizeAsteroid(): String {
-        return "Not Implemented"
+        val size = feed.near_earth_objects.size
+        var avg: Double = 0.0
+        for (item in feed.near_earth_objects) {
+
+            for (obj in item.value) {
+                avg += obj.estimated_diameter.kilometers.estimated_diameter_max.toDouble()
+            }
+        }
+        return "${avg/size}Km/h"
     }
 
     override  fun requestFeed(startDate: String, endDate: String) {
 
-        GlobalScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             model.getFeed(startDate, endDate).body()?.let {
                 feed  = it
                 CoroutineScope(Dispatchers.Main).launch() {

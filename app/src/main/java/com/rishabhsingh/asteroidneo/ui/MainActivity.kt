@@ -2,17 +2,14 @@ package com.rishabhsingh.asteroidneo.ui
 
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.rishabhsingh.asteroidneo.R
-import com.rishabhsingh.asteroidneo.api.NasaClient
 import com.rishabhsingh.asteroidneo.contracts.Contracts
 import com.rishabhsingh.asteroidneo.databinding.ActivityMainBinding
 import com.rishabhsingh.asteroidneo.presenter.MainActivityPresenter
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -20,8 +17,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),Contracts.View {
 
     private lateinit var binding : ActivityMainBinding
     private var mPresenter: MainActivityPresenter? = null
-    private lateinit var startDate :String
-    private lateinit var endDate :String
+    private var startDate :String? = null
+    private var endDate :String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,16 +79,39 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),Contracts.View {
 
             btnSubmit.setOnClickListener{
                 progressBar.isVisible = true
-                mPresenter?.requestFeed(startDate, endDate)
+                if (checkDateValidity(startDate, endDate)) {
+
+                    startDate?.let { it1 -> endDate?.let { it2 -> mPresenter?.requestFeed(it1, it2) } }
+                } else {
+                    progressBar.isVisible = false
+                }
 
             }
         }
     }
 
-    override fun updateData(fastest :String, average : String, minimum : String) {
+    private fun checkDateValidity(startDate: String?, endDate: String?):Boolean {
+        if((startDate == null) || (endDate == null) || startDate.isEmpty() || endDate.isEmpty()){
+            Toast.makeText(this,"Please select the dates",Toast.LENGTH_SHORT).show()
+            return false
+        }
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val start = sdf.parse(startDate)
+        val end = sdf.parse(endDate)
+        val timeDifference: Long = end.getTime() - start.getTime()
+        val daysDifference: Long = timeDifference / (1000 * 60 * 60 * 24) % 365
+        if (daysDifference > 10) {
+            Toast.makeText(this, "Select date range of max 10 days", Toast.LENGTH_SHORT).show()
+            return false
+        } else {
+            return true
+        }
+    }
+
+    override fun updateData(fastest :String, average : String, closest : String) {
         binding.apply {
             tvFastestAsteroid.text = fastest
-            tvClosestAsteroid.text = minimum
+            tvClosestAsteroid.text = closest
             tvAverageSizeAsteroid.text = average
             progressBar.isVisible = false
         }
